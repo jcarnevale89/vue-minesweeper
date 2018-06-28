@@ -7,6 +7,7 @@ Vue.use(Vuex)
 
 const state = {
   tiles: [],
+  tileDirectory: [],
   tileSize: 30,
   columns: 10,
   rows: 10,

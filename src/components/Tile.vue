@@ -3,6 +3,8 @@
     .cover(
       v-if="tile.covered"
       @click="showTile"
+      @click.right.prevent="flagTile"
+      :class="{ 'flagged': tile.flagged }"
     )
     .content(v-else)
       .mine(v-if="tile.mine")
@@ -39,14 +41,28 @@ export default {
     colorClass() {
       return `color-${this.tile.count}`
     },
+    tileCoordinates() {
+      return {
+        x: this.tile.x,
+        y: this.tile.y,
+      }
+    },
   },
+  // watch: {
+  //   tile() {
+  //     // this.showTile()
+  //     console.log('tile',)
+  //   },
+  // },
   methods: {
     showTile() {
+      if (this.tile.covered && !this.tile.flagged) {
+        this.$store.commit('showTile', this.tileCoordinates)
+      }
+    },
+    flagTile() {
       if (this.tile.covered) {
-        this.$store.dispatch('showTile', {
-          x: this.tile.x,
-          y: this.tile.y,
-        })
+        this.$store.commit('flagTile', this.tileCoordinates)
       }
     },
   },
@@ -73,6 +89,9 @@ export default {
     border-right-color #707070
     border-bottom-color #707070
     border-left-color #FFFFFF
+
+    &.flagged
+      background-color blue
 
   .content
     position absolute

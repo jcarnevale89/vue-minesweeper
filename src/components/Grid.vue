@@ -1,11 +1,10 @@
 <template lang="pug">
   .grid(:style="styleObject")
-    template(v-for="cols in tiles")
-      Tile(
-        v-for="tile in cols"
-        :key="tile.key"
-        :tile="tile"
-      )
+    Tile(
+      v-for="tile in tiles"
+      :key="tile.key"
+      :tile="tile"
+    )
 </template>
 
 <script>
