@@ -1,15 +1,21 @@
 <template lang="pug">
-  .tile(
-    @click="showTile"
-  )
-    .cover(v-if="tile.covered")
+  .tile(:style="styleObject")
+    .cover(
+      v-if="tile.covered"
+      @click="showTile"
+    )
     .content(v-else)
       .mine(v-if="tile.mine")
-      .mine-count(v-else)
-        | {{tile.x}},{{tile.y}}
+      .mine-count(
+        v-else
+        :class="colorClass"
+      )
+        | {{ tile.count }}
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'Tile',
   props: {
@@ -17,6 +23,22 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  computed: {
+    ...mapState([
+      'tileSize',
+      'columns',
+      'rows',
+    ]),
+    styleObject() {
+      return {
+        width: `${(this.tileSize * this.columns) / this.columns}px`,
+        height: `${(this.tileSize * this.rows) / this.rows}px`,
+      }
+    },
+    colorClass() {
+      return `color-${this.tile.count}`
+    }
   },
   methods: {
     showTile() {
@@ -33,8 +55,6 @@ export default {
 
 <style lang="stylus">
 .tile
-  width 10%
-  height 10%
   display flex
   justify-content center
   align-items center
@@ -72,31 +92,33 @@ export default {
       background-color #cc0000
 
     .mine-count
-      .color-0
-        color #999999
+      font-weight 700
 
-      .color-1
+      &.color-0
+        display none
+
+      &.color-1
         color #0009FF
 
-      .color-2
+      &.color-2
         color #017000
 
-      .color-3
+      &.color-3
         color #CC0000
 
-      .color-4
+      &.color-4
         color #000270
 
-      .color-5
+      &.color-5
         color #700000
 
-      .color-6
+      &.color-6
         color #007070
 
-      .color-7
+      &.color-7
         color #000000
 
-      .color-8
+      &.color-8
         color #707070
 
 </style>

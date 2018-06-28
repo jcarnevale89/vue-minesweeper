@@ -1,5 +1,5 @@
 <template lang="pug">
-  .grid
+  .grid(:style="styleObject")
     template(v-for="cols in tiles")
       Tile(
         v-for="tile in cols"
@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Tile from './Tile.vue'
 
 export default {
@@ -17,8 +18,17 @@ export default {
     Tile,
   },
   computed: {
-    tiles() {
-      return this.$store.state.tiles
+    ...mapState([
+      'tiles',
+      'tileSize',
+      'columns',
+      'rows',
+    ]),
+    styleObject() {
+      return {
+        width: `${this.columns * this.tileSize}px`,
+        height: `${this.rows * this.tileSize}px`,
+      }
     },
   },
   created() {
@@ -32,8 +42,7 @@ export default {
   display flex
   flex-wrap wrap
   flex-direction column
-  width 500px
-  height 500px
   border 3px solid #707070
+  margin 0 auto
 </style>
 
