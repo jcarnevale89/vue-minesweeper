@@ -71,19 +71,18 @@ const generateCount = ({ state, commit }) => {
     let count = 0
     if (tile.mine) {
       count = -1
-      return
-    }
-    
-    for (let xOffset = -1; xOffset <= 1; xOffset++) {
-      for (let yOffset = -1; yOffset <= 1; yOffset++) {
-        const x = tile.x + xOffset
-        const y = tile.y + yOffset
-
-        if (x > -1 && x < state.columns && y > -1 && y < state.rows) {
-          const tileIndex = state.tileDirectory[x][y]
-          const surroundingTile = state.tiles[tileIndex]
-          if (surroundingTile.mine) {
-            count++
+    } else {
+      for (let xOffset = -1; xOffset <= 1; xOffset++) {
+        for (let yOffset = -1; yOffset <= 1; yOffset++) {
+          const x = tile.x + xOffset
+          const y = tile.y + yOffset
+  
+          if (x > -1 && x < state.columns && y > -1 && y < state.rows) {
+            const tileIndex = state.tileDirectory[x][y]
+            const surroundingTile = state.tiles[tileIndex]
+            if (surroundingTile.mine) {
+              count++
+            }
           }
         }
       }
