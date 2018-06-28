@@ -38,7 +38,7 @@ export default {
     },
     colorClass() {
       return `color-${this.tile.count}`
-    }
+    },
   },
   methods: {
     showTile() {
