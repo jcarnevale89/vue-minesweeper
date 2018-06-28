@@ -1,17 +1,19 @@
 /* eslint-disable */
-const generateGrid = ({ dispatch, state, commit }, count) => {
-  const xCoords = new Array(count)
+const generateTiles = ({ state, commit }) => {
+  // Generate Tiles
+  const xCoords = new Array(state.mineCount)
   let key = 0
 
-  for (let x = 0; x < xCoords.length; x++) {
-    const yCoords = new Array(count)
+  for (let x = 0; x < xCoords.length; x += 1) {
+    const yCoords = new Array(state.mineCount)
 
-    for (let y = 0; y < yCoords.length; y++) {
+    for (let y = 0; y < yCoords.length; y += 1) {
       const mine = {
+        key,
         x,
         y,
-        bomb: false,
-        key,
+        mine: false,
+        covered: true,
       }
 
       yCoords[y] = mine
@@ -21,10 +23,36 @@ const generateGrid = ({ dispatch, state, commit }, count) => {
     xCoords[x] = yCoords
   }
 
-  commit('setGrid', xCoords)
+  const mines = []
+
+  // Generate Mines
+  while (mines.length < 10) {
+    const xC = Math.floor(Math.random() * 10)
+    const yC = Math.floor(Math.random() * 10)
+
+    // If the tile is already a mine, skip it
+    if (xCoords[xC][yC].mine) {
+      continue
+    }
+
+    xCoords[xC][yC].mine = true
+    mines.push({
+      xC,
+      yC,
+    })
+  }
+
+  console.log(mines)
+
+  commit('setTiles', xCoords)
+}
+
+const showTile = ({ state, commit }, coords) => {
+  commit('showTile', coords)
 }
 
 export default {
-  generateGrid
+  generateTiles,
+  showTile,
 }
 

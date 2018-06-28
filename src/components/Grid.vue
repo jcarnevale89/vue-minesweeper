@@ -1,11 +1,10 @@
 <template lang="pug">
   .grid
-    template(v-for="tile in grid")
+    template(v-for="cols in tiles")
       Tile(
-        v-for="x in tile"
-        :key="x.key"
-        :x="x.x"
-        :y="x.y"
+        v-for="tile in cols"
+        :key="tile.key"
+        :tile="tile"
       )
 </template>
 
@@ -18,12 +17,12 @@ export default {
     Tile,
   },
   computed: {
-    grid() {
-      return this.$store.state.grid
+    tiles() {
+      return this.$store.state.tiles
     },
   },
   created() {
-    this.$store.dispatch('generateGrid', 10)
+    this.$store.dispatch('generateTiles')
   },
 }
 </script>
@@ -35,6 +34,6 @@ export default {
   flex-direction column
   width 500px
   height 500px
-  border 1px solid #000
+  border 3px solid #707070
 </style>
 

@@ -6,7 +6,8 @@ import mutations from './mutations'
 Vue.use(Vuex)
 
 const state = {
-  grid: new Array(5),
+  tiles: [],
+  mineCount: 10,
 }
 
 export default new Vuex.Store({
