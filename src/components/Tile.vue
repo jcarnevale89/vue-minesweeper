@@ -41,14 +41,19 @@ export default {
     colorClass() {
       return `color-${this.tile.count}`
     },
+    tileCoordinates() {
+      return {
+        x: this.tile.x,
+        y: this.tile.y,
+      }
+    },
   },
   watch: {
     tile: {
       handler() {
-        // console.log('tile changed')
-        // console.log(newVal)
-        console.log(this.tile)
-        this.showTile()
+        if (this.tile.autoShow) {
+          this.showTile()
+        }
       },
       deep: true,
     },
@@ -56,12 +61,12 @@ export default {
   methods: {
     showTile() {
       if (this.tile.covered && !this.tile.flagged) {
-        this.$store.dispatch('showTile', this.tile.key)
+        this.$store.dispatch('showTile', this.tileCoordinates)
       }
     },
     flagTile() {
       if (this.tile.covered) {
-        this.$store.commit('flagTile', this.tile.key)
+        this.$store.commit('flagTile', this.tileCoordinates)
       }
     },
   },
@@ -110,6 +115,7 @@ export default {
       background-color #cc0000
 
     .mine-count
+      font-size 18px
       font-weight 700
 
       &.color-0

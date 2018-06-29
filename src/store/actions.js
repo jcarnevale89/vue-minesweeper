@@ -13,7 +13,6 @@ const generateTiles = ({ state, commit, dispatch }) => {
   console.log('Generating Tiles')
   
   const tileDirectory = make2DArray(state.columns, state.rows)
-  const tiles = []
   let key = 0
 
   for (let x = 0; x < state.columns; x++) {
@@ -26,17 +25,15 @@ const generateTiles = ({ state, commit, dispatch }) => {
         count: 0,
         covered: true,
         flagged: false,
+        autoShow: false,
       }
     
-      tiles.push(tile)
-      tileDirectory[x][y] = key
+      tileDirectory[x][y] = tile
       key++
     }
   }
 
-  commit('setTiles', tiles)
   commit('setTileDirectory', tileDirectory)
-
   dispatch('generateMines')
 }
 
@@ -45,19 +42,18 @@ const generateMines = ({ state, commit, dispatch }) => {
   console.log('Making Mines')
   const options = []
 
-  state.tiles.forEach((tile) => {
-    options.push({
-      x: tile.x,
-      y: tile.y,
-    })
-  })
+  for (let x = 0; x < state.columns; x++) {
+    for (let y = 0; y < state.rows; y++) {
+      options.push({ x, y })
+    }
+  }
   
   for (let n = 0; n < state.mineCount; n++) {
     const index = Math.floor(Math.random() * options.length)
     const { x, y } = options[index]
-    const tileIndex = state.tileDirectory[x][y]
+    // Remove tile that was just selected
     options.splice(index, 1)
-    commit('setMine', tileIndex)
+    commit('setMine', { x, y })
   }
 
   dispatch('generateCount')
@@ -67,50 +63,54 @@ const generateMines = ({ state, commit, dispatch }) => {
 const generateCount = ({ state, commit }) => {
   console.log('Counting...')
 
-  state.tiles.forEach((tile) => {
-    let count = 0
-    if (tile.mine) {
-      count = -1
-    } else {
-      for (let xOffset = -1; xOffset <= 1; xOffset++) {
-        for (let yOffset = -1; yOffset <= 1; yOffset++) {
-          const x = tile.x + xOffset
-          const y = tile.y + yOffset
-  
-          if (x > -1 && x < state.columns && y > -1 && y < state.rows) {
-            const tileIndex = state.tileDirectory[x][y]
-            const surroundingTile = state.tiles[tileIndex]
-            if (surroundingTile.mine) {
-              count++
+  for (let xCoord = 0; xCoord < state.columns; xCoord++) {
+    for (let yCoord = 0; yCoord < state.rows; yCoord++) {
+      const tile = state.tileDirectory[xCoord][yCoord]
+      let count = 0
+      if (tile.mine) {
+        count = -1
+      } else {
+        for (let xOffset = -1; xOffset <= 1; xOffset++) {
+          for (let yOffset = -1; yOffset <= 1; yOffset++) {
+            const x = tile.x + xOffset
+            const y = tile.y + yOffset
+            
+            if (x > -1 && x < state.columns && y > -1 && y < state.rows) {
+              const surroundingTile = state.tileDirectory[x][y]
+              if (surroundingTile.mine) {
+                count++
+              }
             }
           }
         }
       }
+
+      commit('setSurroundingCount', {
+        x: tile.x,
+        y: tile.y,
+        count,
+      })
     }
-
-    commit('setSurroundingCount', {
-      tileIndex: tile.key,
-      count,
-    })
-  })
+  }
 }
 
-const showTile = ({ commit, dispatch }, tileIndex) => {
-  commit('showTile', tileIndex)
-  // dispatch('floodOpen', tileCoordinates)
-}
-
-const floodOpen = ({ state, commit }, tileCoordinates) => {
-  // const newGrid = state.tiles
-
-  for (let xOffset = -1; xOffset <= 1; xOffset++) {
-    for (let yOffset = -1; yOffset <= 1; yOffset++) {
-      const x = tileCoordinates.x + xOffset
-      const y = tileCoordinates.y + yOffset
-
-      if (x > -1 && x < state.columns && y > -1 && y < state.rows) {
-        const sideTile = state.tiles[x][y]
-        console.log(sideTile)
+// Show the tile that was clicked
+const showTile = ({ state, commit }, tileCoordinates) => {
+  commit('showTile', tileCoordinates)
+  const tile = state.tileDirectory[tileCoordinates.x][tileCoordinates.y]
+  if (tile.count === 0) {
+    // Reveal surrounding tiles that are 0
+    for (let xOffset = -1; xOffset <= 1; xOffset++) {
+      for (let yOffset = -1; yOffset <= 1; yOffset++) {
+        const x = tile.x + xOffset
+        const y = tile.y + yOffset
+        
+        if (x > -1 && x < state.columns && y > -1 && y < state.rows) {
+          const surroundingTile = state.tileDirectory[x][y]
+          if (!surroundingTile.mine && surroundingTile.covered) {
+            commit('setAutoShow', { x, y })
+          }
+        }
       }
     }
   }
@@ -121,5 +121,4 @@ export default {
   generateMines,
   generateCount,
   showTile,
-  floodOpen,
 }

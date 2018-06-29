@@ -6,7 +6,6 @@ import mutations from './mutations'
 Vue.use(Vuex)
 
 const state = {
-  tiles: [],
   tileDirectory: [],
   tileSize: 30,
   columns: 10,

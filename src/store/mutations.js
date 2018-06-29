@@ -1,33 +1,33 @@
 /* eslint-disable */
-const setTiles = (state, tiles) => {
-  state.tiles = tiles
-}
-
 const setTileDirectory = (state, tileDirectory) => {
   state.tileDirectory = tileDirectory
 }
 
-const setMine = (state, tileIndex) => {
-  state.tiles[tileIndex].mine = true
+const setMine = (state, tileCoordinates) => {
+  state.tileDirectory[tileCoordinates.x][tileCoordinates.y].mine = true
 }
 
 const setSurroundingCount = (state, tileData) => {
-  state.tiles[tileData.tileIndex].count = tileData.count
+  state.tileDirectory[tileData.x][tileData.y].count = tileData.count
 }
 
-const showTile = (state, tileIndex) => {
-  state.tiles[tileIndex].covered = false
+const showTile = (state, tileCoordinates) => {
+  state.tileDirectory[tileCoordinates.x][tileCoordinates.y].covered = false
 }
 
-const flagTile = (state, tileIndex) => {
-  state.tiles[tileIndex].flagged = !state.tiles[tileIndex].flagged
+const flagTile = (state, tileCoordinates) => {
+  state.tileDirectory[tileCoordinates.x][tileCoordinates.y].flagged = !state.tileDirectory[tileCoordinates.x][tileCoordinates.y].flagged
+}
+
+const setAutoShow = (state, tileCoordinates) => {
+  state.tileDirectory[tileCoordinates.x][tileCoordinates.y].autoShow = true
 }
 
 export default {
-  setTiles,
   setTileDirectory,
   setMine,
   setSurroundingCount,
   showTile,
   flagTile,
+  setAutoShow,
 }

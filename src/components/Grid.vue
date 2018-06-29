@@ -1,10 +1,11 @@
 <template lang="pug">
   .grid(:style="styleObject")
-    Tile(
-      v-for="tile in tiles"
-      :key="tile.key"
-      :tile="tile"
-    )
+    template(v-for="column in tileDirectory")
+      Tile(
+        v-for="tile in column"
+        :key="tile.key"
+        :tile="tile"
+      )
 </template>
 
 <script>
@@ -18,7 +19,7 @@ export default {
   },
   computed: {
     ...mapState([
-      'tiles',
+      'tileDirectory',
       'tileSize',
       'columns',
       'rows',
