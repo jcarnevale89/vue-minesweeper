@@ -41,28 +41,27 @@ export default {
     colorClass() {
       return `color-${this.tile.count}`
     },
-    tileCoordinates() {
-      return {
-        x: this.tile.x,
-        y: this.tile.y,
-      }
+  },
+  watch: {
+    tile: {
+      handler() {
+        // console.log('tile changed')
+        // console.log(newVal)
+        console.log(this.tile)
+        this.showTile()
+      },
+      deep: true,
     },
   },
-  // watch: {
-  //   tile() {
-  //     // this.showTile()
-  //     console.log('tile',)
-  //   },
-  // },
   methods: {
     showTile() {
       if (this.tile.covered && !this.tile.flagged) {
-        this.$store.commit('showTile', this.tileCoordinates)
+        this.$store.dispatch('showTile', this.tile.key)
       }
     },
     flagTile() {
       if (this.tile.covered) {
-        this.$store.commit('flagTile', this.tileCoordinates)
+        this.$store.commit('flagTile', this.tile.key)
       }
     },
   },

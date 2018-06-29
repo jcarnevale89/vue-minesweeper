@@ -24,7 +24,7 @@ const generateTiles = ({ state, commit, dispatch }) => {
         y,
         mine: false,
         count: 0,
-        covered: false,
+        covered: true,
         flagged: false,
       }
     
@@ -95,31 +95,31 @@ const generateCount = ({ state, commit }) => {
   })
 }
 
-// const showTile = ({ state, commit, dispatch }, tileCoordinates) => {
-//   commit('showTile', tileCoordinates)
-//   dispatch('floodOpen', tileCoordinates)
-// }
+const showTile = ({ commit, dispatch }, tileIndex) => {
+  commit('showTile', tileIndex)
+  // dispatch('floodOpen', tileCoordinates)
+}
 
-// const floodOpen = ({ state, commit }, tileCoordinates) => {
-//   // const newGrid = state.tiles
+const floodOpen = ({ state, commit }, tileCoordinates) => {
+  // const newGrid = state.tiles
 
-//   for (let xOffset = -1; xOffset <= 1; xOffset++) {
-//     for (let yOffset = -1; yOffset <= 1; yOffset++) {
-//       const x = tileCoordinates.x + xOffset
-//       const y = tileCoordinates.y + yOffset
+  for (let xOffset = -1; xOffset <= 1; xOffset++) {
+    for (let yOffset = -1; yOffset <= 1; yOffset++) {
+      const x = tileCoordinates.x + xOffset
+      const y = tileCoordinates.y + yOffset
 
-//       if (x > -1 && x < state.columns && y > -1 && y < state.rows) {
-//         const sideTile = state.tiles[x][y]
-//         console.log(sideTile)
-//       }
-//     }
-//   }
-// }
+      if (x > -1 && x < state.columns && y > -1 && y < state.rows) {
+        const sideTile = state.tiles[x][y]
+        console.log(sideTile)
+      }
+    }
+  }
+}
 
 export default {
   generateTiles,
   generateMines,
   generateCount,
-  // showTile,
-  // floodOpen,
+  showTile,
+  floodOpen,
 }
