@@ -1,5 +1,6 @@
 <template lang="pug">
   #app
+    img(src="@/assets/logo.png")
     router-view
 </template>
 

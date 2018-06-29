@@ -95,7 +95,10 @@ export default {
     border-left-color #FFFFFF
 
     &.flagged
-      background-color blue
+      background-image url('../assets/flag.png')
+      background-size 80%
+      background-repeat no-repeat
+      background-position center
 
   .content
     position absolute
@@ -110,8 +113,12 @@ export default {
     border 1px solid #707070
 
     .mine
-      width 50%
-      height 50%
+      background-image url('../assets/bomb.png')
+      background-size 80%
+      background-repeat no-repeat
+      background-position center
+      width 100%
+      height 100%
       background-color #cc0000
 
     .mine-count
