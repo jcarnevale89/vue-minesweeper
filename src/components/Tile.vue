@@ -1,5 +1,5 @@
 <template lang="pug">
-  .tile(:style="styleObject")
+  .game-tile(:style="styleObject")
     .cover(
       v-if="tile.covered"
       @click="showTile"
@@ -74,7 +74,7 @@ export default {
 </script>
 
 <style lang="stylus">
-.tile
+.game-tile
   display flex
   justify-content center
   align-items center

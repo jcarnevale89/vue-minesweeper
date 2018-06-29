@@ -44,5 +44,6 @@ export default {
   flex-direction column
   border 3px solid #707070
   margin 0 auto
+  box-sizing initial
 </style>
 

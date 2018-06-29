@@ -1,7 +1,7 @@
 <template lang="pug">
   .game
     Grid
-    button(@click="newGrid") New Grid
+    button.button.is-primary(@click="newGrid") New Grid
 </template>
 
 <script>
