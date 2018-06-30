@@ -1,7 +1,9 @@
 <template lang="pug">
   #app
-    img(src="@/assets/logo.png")
-    router-view
+    .section
+      .container
+        img(src="@/assets/logo.png")
+        router-view
 </template>
 
 <style lang="stylus">

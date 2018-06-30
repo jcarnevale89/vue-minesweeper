@@ -46,4 +46,3 @@ export default {
   margin 0 auto
   box-sizing initial
 </style>
-
