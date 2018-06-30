@@ -23,6 +23,22 @@ const setAutoShow = (state, tileCoordinates) => {
   state.tileDirectory[tileCoordinates.x][tileCoordinates.y].autoShow = true
 }
 
+const setTileSize = (state, tileSize) => {
+  state.tileSize = tileSize
+}
+
+const setColumns = (state, columns) => {
+  state.columns = columns
+}
+
+const setRows = (state, rows) => {
+  state.rows = rows
+}
+
+const setMineCount = (state, mineCount) => {
+  state.mineCount = mineCount
+}
+
 export default {
   setTileDirectory,
   setMine,
@@ -30,4 +46,8 @@ export default {
   showTile,
   flagTile,
   setAutoShow,
+  setTileSize,
+  setColumns,
+  setRows,
+  setMineCount,
 }

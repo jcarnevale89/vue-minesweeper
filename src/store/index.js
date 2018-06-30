@@ -8,8 +8,8 @@ Vue.use(Vuex)
 const state = {
   tileDirectory: [],
   tileSize: 30,
-  columns: 10,
-  rows: 10,
+  columns: 9,
+  rows: 9,
   mineCount: 10,
 }
 

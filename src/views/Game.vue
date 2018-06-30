@@ -2,6 +2,7 @@
   .game
     Grid
     button.button.is-primary(@click="newGrid") New Grid
+    // button.button.is-warning(@click="$store.dispatch('setMineCount')") Change Mines
 </template>
 
 <script>

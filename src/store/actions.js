@@ -116,9 +116,14 @@ const showTile = ({ state, commit }, tileCoordinates) => {
   }
 }
 
+const setMineCount = ({ commit }) => {
+  commit('setMineCount', 20)
+}
+
 export default {
   generateTiles,
   generateMines,
   generateCount,
   showTile,
+  setMineCount,
 }
