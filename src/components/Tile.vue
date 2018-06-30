@@ -28,14 +28,13 @@ export default {
   },
   computed: {
     ...mapState([
-      'tileSize',
       'columns',
       'rows',
     ]),
     styleObject() {
       return {
-        width: `${(this.tileSize * this.columns) / this.columns}px`,
-        height: `${(this.tileSize * this.rows) / this.rows}px`,
+        width: `${100 / this.columns}%`,
+        height: `${100 / this.rows}%`,
       }
     },
     colorClass() {
