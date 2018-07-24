@@ -1,10 +1,22 @@
 <template lang="pug">
   #app
+    GameOptions
     .section
       .container
-        img(src="@/assets/logo.png")
+        // img(src="@/assets/logo.png")
         router-view
 </template>
+
+<script>
+import GameOptions from '@/components/GameOptions.vue'
+
+export default {
+  components: {
+    GameOptions,
+  },
+}
+</script>
+
 
 <style lang="stylus">
 #app
