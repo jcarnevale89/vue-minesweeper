@@ -1,6 +1,6 @@
 <template lang="pug">
   #app
-    GameOptions
+    Navbar
     .section
       .container
         // img(src="@/assets/logo.png")
@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import GameOptions from '@/components/GameOptions.vue'
+import Navbar from '@/components/Navbar.vue'
 
 export default {
   components: {
-    GameOptions,
+    Navbar,
   },
 }
 </script>
@@ -24,6 +24,14 @@ export default {
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
   text-align center
-  color #2c3e50 
+  color #2c3e50
+
+.fade-enter-active
+.fade-leave-active
+  transition opacity .35s
+
+.fade-enter
+.fade-leave-to
+  opacity 0
 
 </style>
